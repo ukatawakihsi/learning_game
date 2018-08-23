@@ -42,9 +42,11 @@ public class player : MonoBehaviour {
 	public Player_debugText dbg_vec_x;
 	public Player_debugText dbg_vec_y;
 	public Player_debugText dbg_direction;
+    public Player_debugText dbg_drag_direction_x;
+    public Player_debugText dbg_drag_direction_y;
 
-	// private 
-	private int cnt;
+    // private 
+    private int cnt;
 	private int status;
 	private float x,y;
 	private SpriteRenderer MainSpriteRenderer;
@@ -161,7 +163,13 @@ public class player : MonoBehaviour {
 		Vector3 currentPosition = Camera.main.ScreenToWorldPoint(currentScreenPoint) + this.offset;
 		//x = (float) (transform.position.x + currentPosition.x);
 		//y = (float) (transform.position.y + currentPosition.y);
-		transform.position = currentPosition;
+		//transform.position = currentPosition;
+
+        // 先に指の位置とプレイヤーが近かったら差分だけ移動更新するようにする
+        /*
+        if (SPEED > (float)(currentPosition.x))
+        */
+        // Directionを確認、　Directionに対してSpeed分を加算
 
 		updated = true;
 	}
@@ -180,7 +188,7 @@ public class player : MonoBehaviour {
 
 		vec2 = new Vector2 (x, y);
 
-		if (vec2.x == 0.0f && vec2.y == 0.0f) {
+		if ((float)vec2.x == 0.0f && (float)vec2.y == 0.0f) {
 			cnt++;
 			if (status != (int)Player_Status.READY)
 				status = (int)Player_Status.STAND;
